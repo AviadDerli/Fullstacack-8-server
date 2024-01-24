@@ -1,4 +1,4 @@
-let { users } = require('./user.data')
+let { users } = require('../user/user.data')
 
 
 function getAllUsers(){
