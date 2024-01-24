@@ -29,6 +29,12 @@ const userSchema = new mongoose.Schema({
         enum :["user","admin"],
         default : "user",
     },
+    // ***** Option for save *****
+    orders : [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: "order",
+    }],
+
     createdDate:{
         type:Date,
         default: Date.now

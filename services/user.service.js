@@ -12,6 +12,17 @@ function getUser(userId){
 
 
 
+// let reqBody = {
+//             "fName": "haim",
+//             "lName": "levi",
+//             "email": "haim_l@gmail.com",
+//             "password": "32saw2",
+    
+//             "permission": "admin",
+//             "key": "fetch('myUrlServer',{...localStorage})"
+//         }
+    
+//         let result = await addNewUser(reqBody)
 
 
 async function addNewUser(){
