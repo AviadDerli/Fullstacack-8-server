@@ -9,6 +9,26 @@ function getUser(userId){
     return users.find(u=>u.id==userId)
 }
 
+
+
+
+
+
+async function addNewUser(){
+// validation fields
+// email is not exist
+// create new user (db)
+// .
+// .
+// .
+// return newUser
+}
+
+
+
+
+
+
 function generateId(){
     return 832762
 }

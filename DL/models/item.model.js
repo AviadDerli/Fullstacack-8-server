@@ -5,9 +5,6 @@
 
 // model == table/collection
 
-// temp - זמני 
-const db = require('./db')
-db.connect()
 
 const mongoose = require('mongoose')
 const itemSchema = new mongoose.Schema({
@@ -33,6 +30,10 @@ const itemSchema = new mongoose.Schema({
     price: {
         type: Number,
     },
+    isActive: {
+        type:Boolean,
+        default : true
+    }
 })
 const itemModel = mongoose.model('item', itemSchema)
 module.exports = itemModel;

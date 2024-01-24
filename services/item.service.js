@@ -1,4 +1,4 @@
-const itemController = require('./item.controller')
+const itemController = require('../DL/controllers/item.controller')
 
 async function getItemByBarcode(bc){
 
