@@ -1,64 +1,77 @@
-const orderController = require('../DL/controllers/order.controller')
+const orderController = require("../DL/controllers/order.controller");
+const itemsController = require("../DL/controllers/item.controller");
 
-  let data = {
-        userId: "65afda92031702a7e64dabc3",
-        items : {
-            "65a7d3ec1a89c6edce167955" : 5,
-            "65a7d3ec1a89c6edce167960" : 3,
-            "65a7d3ec1a89c6edce16796f" : 1,
-        }
-    }
+let data = {
+  userId: "65afda92031702a7e64dabc3",
+  items: {
+    "65a7d3ec1a89c6edce167955": 5,
+    "65a7d3ec1a89c6edce167960": 3,
+    "65a7d3ec1a89c6edce16796f": 1,
+  },
+};
 
 async function addNewOrder(dataX) {
-    // ממי הוא מקבל >>>> מה הוא מקבל
+  // ממי הוא מקבל >>>> מה הוא מקבל
+  const order = {
+    userId: dataX.userId,
+    total:0 
+  };
+  const orderItems = Object.keys(dataX.items)
+  .map(async (itemId)=>{
+    const item = await itemsController.readOne({_id:itemId})
+    // item
+    order.total +=item.price*dataX[item._id]
+    return {
+        itemId:item._id,
+        price:item.price,
+        amount:dataX[item._id]
+    }
+});
+    order.items = orderItems
+    return await orderController.create(order)
 
+  // בדיקות
 
+  // - האם יוזר קיים
+//   let user = await orderController.readOne({ userId: data.userId });
+//   if (!user) throw { code: 404, msg: "user is not exist" };
 
-    // בדיקות
-    
-    // - האם יוזר קיים
-    let user = await orderController.readOne({userId : data.userId})
-    if(!user) throw {code : 404 , msg : "user is not exist" }
-    
-    let values = Object.values(data.items)
-    // - האם יש מוצרים בהזמנה
-    if(!data.items || !values.length) throw {code : 404 , msg : "items empty" }
+//   let values = Object.values(data.items);
+//   // - האם יש מוצרים בהזמנה
+//   if (!data.items || !values.length) throw { code: 404, msg: "items empty" };
 
-    // - כמות > 0 
-    if(values.some(v=>v<=0)) throw {code : 404 , msg : "value 0" }
-    
-    // מוצר קיים ?  
-    // מחיר מוצר  
+//   // - כמות > 0
+//   if (values.some((v) => v <= 0)) throw { code: 404, msg: "value 0" };
 
-    //  חישוב הסה"כ
+  // מוצר קיים ?
+  // מחיר מוצר
 
-    // ממפה כל המידע לתצורת הסכמה 
+  //  חישוב הסה"כ
 
-    //  יצירת הזמנה ב-DB
+  // ממפה כל המידע לתצורת הסכמה
 
-    // לעדכן את רשימת ההזמנות בתוך היוזר במזהה של ההזדמנה חדשה
+  //  יצירת הזמנה ב-DB
 
+  // לעדכן את רשימת ההזמנות בתוך היוזר במזהה של ההזדמנה חדשה
 
-    // החזרת תשובה
-
+  // החזרת תשובה
 }
 
 async function getAllOrders() {
-    let orders = await orderController.read()
-    return orders
-
- }
+  let orders = await orderController.read();
+  return orders;
+}
 
 async function getOrdersByUser(userId) {
-    let result = await orderController.read({userId},true)
+  let result = await orderController.read({ userId }, true);
 
-    return result;
- }
+  return result;
+}
 
 async function getOrder(orderId) {
-    let result = await orderController.readOne({_id:orderId})
+  let result = await orderController.readOne({ _id: orderId });
+  if (!result) throw "Order not found";
+  return result;
+}
 
-    return result;
- }
-
-module.exports = { addNewOrder, getAllOrders, getOrdersByUser }
+module.exports = { addNewOrder, getAllOrders, getOrdersByUser, getOrder };

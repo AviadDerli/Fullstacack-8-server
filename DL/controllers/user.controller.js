@@ -9,7 +9,7 @@ async function read(filter={}){
 }
 
 async function readOne(filter){
-   return await userModel.findOne(filter)
+   return await userModel.findOne(filter).populate('orders')
 }
 
 async function update(filter,data){
@@ -28,13 +28,4 @@ async function del(id){
 module.exports = {create,read,readOne,updateById,del}
 
 
-const starter = async ()=>{
-    const db = require('./db')
-    await db.connect()
-
-
-    let res = await read()
-    console.log(res);
-}
-starter()
 
