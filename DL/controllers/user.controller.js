@@ -1,4 +1,4 @@
-const userModel = require('./user.model')
+const userModel = require('../models/user.model')
 
 async function create(data){
     return await userModel.create(data)
@@ -28,13 +28,13 @@ async function del(id){
 module.exports = {create,read,readOne,updateById,del}
 
 
-const starter = async ()=>{
-    const db = require('./db')
-    await db.connect()
+// const starter = async ()=>{
+//     const db = require('./db')
+//     await db.connect()
 
 
-    let res = await read()
-    console.log(res);
-}
-starter()
+//     let res = await read()
+//     console.log(res);
+// }
+// starter()
 
